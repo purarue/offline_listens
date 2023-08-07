@@ -38,13 +38,29 @@ pip install git+https://github.com/seanbreckenridge/offline_listens
 
 ## Usage
 
+```
+Usage: offline_listens [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  dump          dump listens
+  listen        add a listen
+  update-cache  update cache file
+```
+
 To use this, you need to set the `OFFLINE_LISTENS_COMMANDS` environment variable to a list of commands (separated with `:`, like a `$PATH`) that generate JSON data in the format above.
 
-```
-offline_listens
-```
+When you run this for the first time, it runs that command and generates a cache at `~/.cache/offline-listens.json`, which is then used when you are asked to pick a song you just listened to. To update that cache, you can run `offline_listens update-cache`.
 
-TODO: fill out usage
+For my `OFFLINE_LISTENS_COMMANDS`, I use a single command, using my [listens](https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/listens) script, with [a small wrapper](https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/offline-listens-source) which removes the date/only returns unique songs
+
+So my config just looks like:
+
+```
+export OFFLINE_LISTENS_COMMANDS='offline-listens-source'
+```
 
 ### Tests
 

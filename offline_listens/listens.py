@@ -68,12 +68,40 @@ def fetch_listens() -> Iterator[Source]:
             yield listen
 
 
+CACHE_FILE = os.path.expanduser("~/.cache/offline-listens.json")
+
+
+def read_cache() -> List[Source]:
+    if not os.path.exists(CACHE_FILE):
+        return update_cache()
+    else:
+        with open(CACHE_FILE) as f:
+            return [
+                Source(
+                    artist=listen["artist"],
+                    album=listen["album"],
+                    track=listen["track"],
+                )
+                for listen in json.load(f)
+            ]
+
+
+def update_cache() -> List[Source]:
+    """
+    Updates the cache file.
+    """
+    listens = list(fetch_listens())
+    with open(CACHE_FILE, "w") as f:
+        json.dump([listen._asdict() for listen in listens], f)
+    return listens
+
+
 def prompt(now: bool) -> Listen:
     import click
     from autotui.pick import pick_namedtuple
     from autotui.namedtuple_prompt import prompt_namedtuple
 
-    picked = pick_namedtuple(fetch_listens())
+    picked = pick_namedtuple(read_cache())
     if picked is None:
         click.echo("No listens picked", err=True)
         return prompt_namedtuple(Listen)
