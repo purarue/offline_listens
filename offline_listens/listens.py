@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+from pathlib import Path
 from datetime import datetime
 
 from typing import List, NamedTuple, Iterator, Generator, Dict, Any, Optional
@@ -68,7 +69,8 @@ def fetch_listens() -> Iterator[Source]:
             yield listen
 
 
-CACHE_FILE = os.path.expanduser("~/.cache/offline-listens.json")
+HOME_DIR = Path.home()
+CACHE_FILE = HOME_DIR / ".cache" / "offline-listens.json"
 
 
 def read_cache() -> List[Source]:
@@ -91,6 +93,8 @@ def update_cache() -> List[Source]:
     Updates the cache file.
     """
     listens = list(fetch_listens())
+    if not CACHE_FILE.parent.exists():
+        CACHE_FILE.parent.mkdir(parents=True)
     with open(CACHE_FILE, "w") as f:
         json.dump([listen._asdict() for listen in listens], f)
     return listens
