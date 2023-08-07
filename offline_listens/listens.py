@@ -118,4 +118,10 @@ def prompt(now: bool) -> Listen:
         }
         if now:
             data["when"] = datetime.now()
-        return prompt_namedtuple(Listen, attr_use_values=data)
+        nt = prompt_namedtuple(Listen, attr_use_values=data)
+        return Listen(
+            artist=nt.artist.strip(),
+            album=nt.album.strip() if nt.album and nt.album.strip() else None,
+            track=nt.track.strip(),
+            when=nt.when,
+        )
