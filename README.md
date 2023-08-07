@@ -44,6 +44,8 @@ To use this, you need to set the `OFFLINE_LISTENS_COMMANDS` environment variable
 offline_listens
 ```
 
+TODO: fill out usage
+
 ### Tests
 
 ```bash
