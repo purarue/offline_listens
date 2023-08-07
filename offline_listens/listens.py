@@ -3,7 +3,7 @@ import sys
 import json
 from datetime import datetime
 
-from typing import List, NamedTuple, Iterator, Generator, Dict, Any
+from typing import List, NamedTuple, Iterator, Generator, Dict, Any, Optional
 
 
 class Source(NamedTuple):
@@ -14,8 +14,8 @@ class Source(NamedTuple):
 
 class Listen(NamedTuple):
     artist: str
-    album: str
     track: str
+    album: Optional[str]
     when: datetime
 
 
