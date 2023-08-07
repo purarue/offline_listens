@@ -73,19 +73,18 @@ HOME_DIR = Path.home()
 CACHE_FILE = HOME_DIR / ".cache" / "offline-listens.json"
 
 
-def read_cache() -> List[Source]:
+def read_cache() -> Iterator[Source]:
     if not os.path.exists(CACHE_FILE):
         return update_cache()
     else:
         with open(CACHE_FILE) as f:
-            return [
-                Source(
+            for line in f:
+                listen = json.loads(line)
+                yield Source(
                     artist=listen["artist"],
                     album=listen["album"],
                     track=listen["track"],
                 )
-                for listen in json.load(f)
-            ]
 
 
 def update_cache() -> List[Source]:
@@ -96,7 +95,9 @@ def update_cache() -> List[Source]:
     if not CACHE_FILE.parent.exists():
         CACHE_FILE.parent.mkdir(parents=True)
     with open(CACHE_FILE, "w") as f:
-        json.dump([listen._asdict() for listen in listens], f)
+        for listen in listens:
+            json.dump(listen._asdict(), f, separators=(",", ":"))
+            f.write("\n")
     return listens
 
 

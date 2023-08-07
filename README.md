@@ -14,7 +14,7 @@ This is very generic -- it accepts one or more commands that generate JSON data 
 }
 ```
 
-as a list of JSON like:
+as a list of JSON objects, one per line like (without the surrounding `[]`):
 
 ```
 {"artist": "Artist Name", "album": "Album Name", "track": "Track Name"}
@@ -61,6 +61,11 @@ So my config just looks like:
 ```
 export OFFLINE_LISTENS_COMMANDS='offline-listens-source'
 ```
+
+To generate the correct JSON, I would recommend [`jq`](https://stedolan.github.io/jq/)
+
+- To convert a list into a list of JSON objects, you can use `some-command-which-makes-json | jq '.[]'`
+- To compress the JSON, you can use `some-command-which-makes-json | jq -c`
 
 ### Tests
 
