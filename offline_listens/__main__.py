@@ -20,8 +20,6 @@ default_listens_file = (
     type=click.Path(path_type=Path),
     default=default_listens_file,
     envvar="OFFLINE_LISTENS_FILE",
-    show_default=True,
-    show_envvar=True,
 )
 def listen(now: bool, listens_file: Path) -> None:
     """
