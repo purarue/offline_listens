@@ -49,12 +49,13 @@ def yield_listens(command: str) -> Generator[Source, None, None]:
     assert process.stdout is not None
     for line in process.stdout:
         try:
-            listen = json.loads(line)
+            listen: Dict[str, Any] = json.loads(line)
         except json.JSONDecodeError:
+            print(f"Failed to parse JSON: {line}", file=sys.stderr)
             continue
         yield Source(
             artist=listen["artist"],
-            album=listen["album"],
+            album=listen.get("album", None),
             # fetch from track or title
             track=listen.get("track", listen.get("title", "")),
         )
@@ -108,7 +109,7 @@ def prompt(now: bool) -> Listen:
 
     picked = pick_namedtuple(read_cache())
     if picked is None:
-        click.echo("No listens picked", err=True)
+        click.echo("No listen picked", err=True)
         return prompt_namedtuple(Listen)
     else:
         data: Dict[str, Any] = {
