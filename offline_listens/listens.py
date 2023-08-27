@@ -51,7 +51,7 @@ def yield_listens(command: str) -> Generator[Source, None, None]:
         try:
             listen: Dict[str, Any] = json.loads(line)
         except json.JSONDecodeError:
-            print(f"Failed to parse JSON: {line}", file=sys.stderr)
+            print(f"Failed to parse JSON: {line.decode('utf-8')}", file=sys.stderr)
             continue
         yield Source(
             artist=listen["artist"],
