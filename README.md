@@ -22,7 +22,9 @@ as a list of JSON objects, one per line like (without the surrounding `[]`):
 {"artist": "Artist Name", "album": "Album Name", "track": "Track Name"}
 ```
 
-and then lets you pick one of those, and then saves it to a file.
+...and then lets you pick one of those, and then saves it to a file.
+
+If you don't select one of those, it'll just prompt you to manually enter each field
 
 This is then combined into [HPI](https://github.com/seanbreckenridge/HPI) listens in the `my.offline.listens` module
 
