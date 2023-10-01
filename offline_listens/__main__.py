@@ -24,6 +24,10 @@ default_listens_file = (
 def listen(now: bool, listens_file: Path) -> None:
     """
     Add a listen to your listens file
+
+    If the OFFLINE_LISTENS_FILE environment variable is set,
+    it will be used as the listens file. Otherwise, this stores in
+    ~/.local/share/offline_listens/listens.json
     """
     from .listens import prompt, Listen
 

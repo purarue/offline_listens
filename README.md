@@ -52,6 +52,12 @@ Commands:
   update-cache  update cache file
 ```
 
+By default this saves to `~/.local/share/offline_listens/listens.json`. You can override that by passing the filename to `listen`, or by setting the OFFLINE_LISTENS_FILE environment variable. That can be a `.json` or `.yaml` file, like:
+
+```bash
+export OFFLINE_LISTENS_FILE="${HOME}/Documents/listens.yaml"
+```
+
 To use this, you need to set the `OFFLINE_LISTENS_COMMANDS` environment variable to a list of commands (separated with `:`, like a `$PATH`) that generate JSON data in the format above.
 
 When you run this for the first time, it runs that command and generates a cache at `~/.cache/offline-listens.json`, which is then used when you are asked to pick a song you just listened to. To update that cache, you can run `offline_listens update-cache`.
