@@ -49,6 +49,7 @@ Options:
 Commands:
   dump          dump listens
   listen        add a listen
+  parse         parse an offline listens file
   update-cache  update cache file
 ```
 
@@ -68,6 +69,14 @@ So my config just looks like:
 
 ```
 export OFFLINE_LISTENS_COMMANDS='offline-listens-source'
+```
+
+If you don't have any sources, you could just create a script like this, which parses the offline listens file itself:
+
+```bash
+#!/usr/bin/env bash
+
+python3 -m offline_listens parse | jq '.[] | del(.when)' -c | sort | uniq
 ```
 
 To generate the correct JSON, I would recommend [`jq`](https://stedolan.github.io/jq/)

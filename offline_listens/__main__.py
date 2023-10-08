@@ -54,6 +54,34 @@ def update_cache() -> None:
     click.echo("Done.")
 
 
+@main.command(short_help="parse an offline listens file")
+@click.argument(
+    "LISTENS_FILE",
+    required=True,
+    type=click.Path(path_type=Path),
+    default=default_listens_file,
+    envvar="OFFLINE_LISTENS_FILE",
+)
+def parse(listens_file: Path) -> None:
+    """
+    Parses an offline listens file, and prints the output to stdout.
+    """
+    import datetime
+
+    import simplejson
+
+    from .parse import parse_file
+
+    data = list(parse_file(listens_file))
+
+    def _default(o: object) -> str:
+        if isinstance(o, datetime.datetime):
+            return o.isoformat()
+        raise TypeError
+
+    click.echo(simplejson.dumps(data, namedtuple_as_object=True, default=_default))
+
+
 @main.command(short_help="dump listens")
 def dump() -> None:
     """
