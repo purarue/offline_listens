@@ -54,7 +54,11 @@ def yield_listens(command: str) -> Generator[Source, None, None]:
         else:
             command = lookup
 
-    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+    command_str: List[str] = ["sh", "-c", *list(shlex.split(command))]
+
+    process = subprocess.Popen(
+        command_str, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
     assert process.stdout is not None
     for line in process.stdout:
         try:
