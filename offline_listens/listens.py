@@ -40,10 +40,19 @@ def yield_listens(command: str) -> Generator[Source, None, None]:
     Yields listens from a command.
     """
     import shlex
+    import shutil
     import subprocess
 
     if not command:
         return
+
+    if len(shlex.split(command)) == 1:
+        lookup = shutil.which(command)
+        if lookup is None:
+            print(f"Command {command} not found in $PATH", file=sys.stderr)
+            return
+        else:
+            command = lookup
 
     process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
     assert process.stdout is not None
