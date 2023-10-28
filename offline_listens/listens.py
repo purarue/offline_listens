@@ -54,7 +54,7 @@ def yield_listens(command: str) -> Generator[Source, None, None]:
         else:
             command = lookup
 
-    command_str: List[str] = ["sh", "-c", *list(shlex.split(command))]
+    command_str: List[str] = ["sh", "-c", command]
 
     process = subprocess.Popen(
         command_str, stdout=subprocess.PIPE, stderr=subprocess.PIPE
