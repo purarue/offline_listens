@@ -26,7 +26,7 @@ as a list of JSON objects, one per line like (without the surrounding `[]`):
 
 If you don't select one of those, it'll just prompt you to manually enter each field
 
-This is then combined into [HPI](https://github.com/seanbreckenridge/HPI) listens in the `my.offline.listens` module
+This is then combined into [HPI](https://github.com/purarue/HPI) listens in the `my.offline.listens` module
 
 ## Installation
 
@@ -35,7 +35,7 @@ Requires `python3.8+`
 To install with pip, run:
 
 ```
-pip install git+https://github.com/seanbreckenridge/offline_listens
+pip install git+https://github.com/purarue/offline_listens
 ```
 
 ## Usage
@@ -63,7 +63,7 @@ To use this, you need to set the `OFFLINE_LISTENS_COMMANDS` environment variable
 
 When you run this for the first time, it runs that command and generates a cache at `~/.cache/offline-listens.json`, which is then used when you are asked to pick a song you just listened to. To update that cache, you can run `offline_listens update-cache`.
 
-For my `OFFLINE_LISTENS_COMMANDS`, I use a single command, using my [listens](https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/listens) script, with [a small wrapper](https://github.com/seanbreckenridge/HPI-personal/blob/master/scripts/offline-listens-source) which removes the date/only returns unique songs
+For my `OFFLINE_LISTENS_COMMANDS`, I use a single command, using my [listens](https://github.com/purarue/HPI-personal/blob/master/scripts/listens) script, with [a small wrapper](https://github.com/purarue/HPI-personal/blob/master/scripts/offline-listens-source) which removes the date/only returns unique songs
 
 So my config just looks like:
 
@@ -87,7 +87,7 @@ To generate the correct JSON, I would recommend [`jq`](https://stedolan.github.i
 ### Tests
 
 ```bash
-git clone 'https://github.com/seanbreckenridge/offline_listens'
+git clone 'https://github.com/purarue/offline_listens'
 cd ./offline_listens
 pip install '.[testing]'
 flake8 ./offline_listens
