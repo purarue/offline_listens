@@ -89,7 +89,7 @@ CACHE_FILE = HOME_DIR / ".cache" / "offline-listens.json"
 
 def read_cache() -> Iterator[Source]:
     if not os.path.exists(CACHE_FILE):
-        return update_cache()
+        yield from update_cache()
     else:
         with open(CACHE_FILE) as f:
             for line in f:
