@@ -56,9 +56,6 @@ warn_redundant_casts = "True"
 warn_return_any = "True"
 warn_unreachable = "True"
 
-[tool.pytest.ini_options]
-addopts = ["--verbose", "tests"]
-
 [tool.setuptools.packages.find]
 include = ["offline_listens"]
 exclude = []
