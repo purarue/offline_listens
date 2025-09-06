@@ -30,7 +30,7 @@ This is then combined into [HPI](https://github.com/purarue/HPI) listens in the 
 
 ## Installation
 
-Requires `python3.8+`
+Requires `python3.9+`
 
 To install with pip, run:
 
