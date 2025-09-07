@@ -1,12 +1,12 @@
 from pathlib import Path
-from typing import List, Iterator
+from typing import Iterator
 
 import autotui.shortcuts
 
 from .listens import Listen
 
 
-def parse_file(file: Path) -> List[Listen]:
+def parse_file(file: Path) -> list[Listen]:
     return autotui.shortcuts.load_from(Listen, file)
 
 

@@ -4,23 +4,23 @@ import json
 from pathlib import Path
 from datetime import datetime
 
-from typing import List, NamedTuple, Iterator, Generator, Dict, Any, Optional
+from typing import NamedTuple, Iterator, Generator, Any
 
 
 class Source(NamedTuple):
     artist: str
-    album: str
+    album: str | None
     track: str
 
 
 class Listen(NamedTuple):
     artist: str
     track: str
-    album: Optional[str]
+    album: str | None
     when: datetime
 
 
-def fetch_commands() -> List[str]:
+def fetch_commands() -> list[str]:
     """
     Feteches the commands from the OFFLINE_LISTENS_COMMANDS environment variable.
     """
@@ -54,7 +54,7 @@ def yield_listens(command: str) -> Generator[Source, None, None]:
         else:
             command = lookup
 
-    command_str: List[str] = ["sh", "-c", command]
+    command_str: list[str] = ["sh", "-c", command]
 
     process = subprocess.Popen(
         command_str, stdout=subprocess.PIPE, stderr=subprocess.PIPE
@@ -62,7 +62,7 @@ def yield_listens(command: str) -> Generator[Source, None, None]:
     assert process.stdout is not None
     for line in process.stdout:
         try:
-            listen: Dict[str, Any] = json.loads(line)
+            listen: dict[str, Any] = json.loads(line)
         except json.JSONDecodeError:
             print(f"Failed to parse JSON: {line.decode('utf-8')}", file=sys.stderr)
             continue
@@ -101,7 +101,7 @@ def read_cache() -> Iterator[Source]:
                 )
 
 
-def update_cache() -> List[Source]:
+def update_cache() -> list[Source]:
     """
     Updates the cache file.
     """
@@ -125,7 +125,7 @@ def prompt(now: bool) -> Listen:
         click.echo("No listen picked", err=True)
         return prompt_namedtuple(Listen)
     else:
-        data: Dict[str, Any] = {
+        data: dict[str, Any] = {
             "artist": picked.artist,
             "album": picked.album,
             "track": picked.track,
