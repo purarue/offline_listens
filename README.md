@@ -35,7 +35,7 @@ Requires `python3.9+`
 To install with pip, run:
 
 ```
-pip install git+https://github.com/purarue/offline_listens
+pip install offline_listens
 ```
 
 ## Usage
